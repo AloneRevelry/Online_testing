@@ -1,0 +1,123 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+<head>
+	<title>登录页面</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="utf-8">
+	<meta name="keywords" content="">
+	<script>
+		addEventListener("load", function () {
+			setTimeout(hideURLbar, 0);
+		}, false);
+
+		function hideURLbar() {
+			window.scrollTo(0, 1);
+		}
+	</script>
+	<link href="/static/css/style.css" rel='stylesheet' type='text/css' />
+
+</head>
+
+<body>
+	<h1>上机考试系统</h1>
+    <ul class="menu" id="menu">
+		<li class="li1">学生</li>
+		<li class="li2">教师</li>
+		<li class="li3">管理员</li>
+	</ul>
+    <script>
+        var li1 = document.getElementsByClassName("li1")[0];
+        var li2 = document.getElementsByClassName("li2")[0];
+        var li3 = document.getElementsByClassName("li3")[0];
+        li1.onclick = function(){
+           window.location= '/login';
+        } ;
+        li2.onclick = function(){
+          window.location = '/login';
+        };
+        li1.addEventListener("mouseover",function(){
+            document.getElementById("student").style.display="";
+            document.getElementById("teacher").style.display="none";
+            document.getElementById("admin").style.display="none";
+        },false);
+        li2.addEventListener("mouseover",function(){
+           document.getElementById("student").style.display="none";
+            document.getElementById("teacher").style.display="";
+            document.getElementById("admin").style.display="none";
+        },false);
+        li3.addEventListener("mouseover",function(){
+             document.getElementById("student").style.display="none";
+            document.getElementById("teacher").style.display="none";
+            document.getElementById("admin").style.display="";
+        },false);
+    </script>
+
+	<div  class="w3ls-login box" id="student">
+		<form method="post">
+            {% csrf_token %}
+            <input hidden type="text" name="figure" value="1"/>
+			<div class="agile-field-txt">
+				<input type="text" name="username" placeholder="请输入你的学号" required="" />
+			</div>
+			<div class="agile-field-txt">
+				<input type="password" name="password" placeholder="请输入你的姓名" required="" id="myInput" />
+				<div class="agile_label">
+					<input id="check3" name="check3" type="checkbox" value="rm">
+					<label class="check" for="check3">Remember me</label>
+				</div>
+			</div>
+           <label style="color: red">{{ errmsg }}</label>
+			<div class="w3ls-bot">
+				<input type="submit" value="Login">
+			</div>
+		</form>
+	</div>
+    <div style="display: none" class="w3ls-login box" id="teacher">
+		<form method="post">
+             {% csrf_token %}
+            <input hidden type="text" name="figure" value="2"/>
+			<div class="agile-field-txt">
+				<input type="text" name="username" placeholder="请输入您的教师编号" required="" />
+			</div>
+			<div class="agile-field-txt">
+				<input type="password" name="password" placeholder="请输入您的密码" required="" id="myInput" />
+				<div class="agile_label">
+					<input id="check3" name="check3" type="checkbox" value="rm">
+					<label class="check" for="check3">Remember me</label>
+				</div>
+			</div>
+            <label style="color: red">{{ errmsg }}</label>
+			<div class="w3ls-bot">
+				<input type="submit" value="Login">
+			</div>
+		</form>
+	</div>
+    <div style="display: none" class="w3ls-login box" id="admin">
+		<form method="post">
+             {% csrf_token %}
+            <input hidden type="text" name="figure" value="3"/>
+			<div class="agile-field-txt">
+				<input type="text" name="username" placeholder="请输入管理员账号" required="" />
+			</div>
+			<div class="agile-field-txt">
+				<input type="password" name="password" placeholder="请输入管理员密码" required="" id="myInput" />
+				<input type="hidden" name="next" value="/xadmin/">
+                <input type="hidden" name="this_is_the_login_form" value="1">
+                <div class="agile_label">
+					<input id="check3" name="check3" type="checkbox" value="rm">
+					<label class="check" for="check3">Remember me</label>
+				</div>
+			</div>
+            <label style="color: red">{{ errmsg }}</label>
+			<div class="w3ls-bot">
+				<input type="submit" value="Login">
+			</div>
+		</form>
+	</div>
+	<div class="copy-wthree">
+		<p>Copyright &copy; 2019.Company name All rights reserved.<a target="_blank" href="https://github.com/AloneRevelry/Online_testing">AloneRevelry</a></p>
+	</div>
+</body>
+
+</html>

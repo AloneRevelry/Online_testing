@@ -1,25 +1,13 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 
-
-class StudentInfo(models.Model):
-    sid = models.IntegerField()
-    sname = models.CharField(max_length=20)
-    sip = models.CharField(max_length=20)
-    submittime = models.DateField()
-
-    class Meta:
-        db_table = 'studentinfo'
-        verbose_name = '学生信息'
-        verbose_name_plural = verbose_name
-
-
-class TeacherInfo(models.Model):
-    tid = models.IntegerField()
-    tname = models.CharField(max_length=20)
-    tpassword = models.CharField(max_length=20)
-    admin_flag = models.BooleanField(default=False)
+class User(AbstractUser):
+    sip = models.CharField(max_length=20, blank=True, null=True)
+    submittime = models.DateField(blank=True, null=True)
+    is_teacher = models.BooleanField(blank=True, null=True)
+    is_student = models.BooleanField(blank=True, null=True)
 
     class Meta:
-        db_table = 'teacherinfo'
-        verbose_name = '教师信息'
+        db_table = 'userinfo'
+        verbose_name = '用户信息'
         verbose_name_plural = verbose_name

@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+<head>
+	<title>登录页面</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="utf-8">
+	<meta name="keywords" content="">
+	<script>
+		addEventListener("load", function () {
+			setTimeout(hideURLbar, 0);
+		}, false);
+
+		function hideURLbar() {
+			window.scrollTo(0, 1);
+		}
+	</script>
+	<link href="/static/css/style.css" rel='stylesheet' type='text/css' />
+    <link href="/static/css/body.css" rel='stylesheet' type='text/css' />
+
+
+</head>
+
+<body>
+	<h1>上机考试系统</h1>
+    <div class="w3ls-login box" id="admin">
+		<form method="post">
+             {% csrf_token %}
+            <input hidden type="text" name="figure" value="3"/>
+			<div class="agile-field-txt">
+				<input type="text" name="username" placeholder="请输入管理员账号" required="" value="{{ username3 }}"/>
+			</div>
+			<div class="agile-field-txt">
+				<input type="password" name="password" placeholder="请输入管理员密码" required="" id="myInput" />
+				<input type="hidden" name="next" value="/xadmin/">
+                <input type="hidden" name="this_is_the_login_form" value="1">
+                <div class="agile_label">
+					<input id="check3" name="remember" type="checkbox" value="rm">
+					<label class="check" for="check3">Remember me</label>
+				</div>
+			</div>
+            <label style="color: red">{{ errmsg }}</label>
+			<div class="w3ls-bot">
+				<input type="submit" value="Login">
+			</div>
+		</form>
+	</div>
+	<div class="copy-wthree">
+		<p>Copyright &copy; 2019.Company name All rights reserved.<a target="_blank" href="https://github.com/AloneRevelry/Online_testing">AloneRevelry</a></p>
+	</div>
+</body>
+
+</html>

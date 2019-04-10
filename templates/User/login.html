@@ -16,6 +16,8 @@
 		}
 	</script>
 	<link href="/static/css/style.css" rel='stylesheet' type='text/css' />
+    <link href="/static/css/body.css" rel='stylesheet' type='text/css' />
+
 
 </head>
 
@@ -58,12 +60,12 @@
             {% csrf_token %}
             <input hidden type="text" name="figure" value="1"/>
 			<div class="agile-field-txt">
-				<input type="text" name="username" placeholder="请输入你的学号" required="" />
+				<input type="text" name="username" placeholder="请输入你的学号" required="" value="{{ username1 }}"/>
 			</div>
 			<div class="agile-field-txt">
 				<input type="password" name="password" placeholder="请输入你的姓名" required="" id="myInput" />
 				<div class="agile_label">
-					<input id="check3" name="check3" type="checkbox" value="rm">
+					<input id="check3" name="remember" type="checkbox" value="rm">
 					<label class="check" for="check3">Remember me</label>
 				</div>
 			</div>
@@ -78,12 +80,12 @@
              {% csrf_token %}
             <input hidden type="text" name="figure" value="2"/>
 			<div class="agile-field-txt">
-				<input type="text" name="username" placeholder="请输入您的教师编号" required="" />
+				<input type="text" name="username" placeholder="请输入您的教师编号" required="" value="{{ username2 }}"/>
 			</div>
 			<div class="agile-field-txt">
 				<input type="password" name="password" placeholder="请输入您的密码" required="" id="myInput" />
 				<div class="agile_label">
-					<input id="check3" name="check3" type="checkbox" value="rm">
+					<input id="check3" name="remember" type="checkbox" value="rm">
 					<label class="check" for="check3">Remember me</label>
 				</div>
 			</div>
@@ -98,14 +100,14 @@
              {% csrf_token %}
             <input hidden type="text" name="figure" value="3"/>
 			<div class="agile-field-txt">
-				<input type="text" name="username" placeholder="请输入管理员账号" required="" />
+				<input type="text" name="username" placeholder="请输入管理员账号" required="" value="{{ username3 }}"/>
 			</div>
 			<div class="agile-field-txt">
 				<input type="password" name="password" placeholder="请输入管理员密码" required="" id="myInput" />
 				<input type="hidden" name="next" value="/xadmin/">
                 <input type="hidden" name="this_is_the_login_form" value="1">
                 <div class="agile_label">
-					<input id="check3" name="check3" type="checkbox" value="rm">
+					<input id="check3" name="remember" type="checkbox" value="rm">
 					<label class="check" for="check3">Remember me</label>
 				</div>
 			</div>

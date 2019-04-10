@@ -62,7 +62,7 @@ class LoginView(BaseAdminView):
             # 'current_app': self.admin_site.name,
             'authentication_form': self.login_form or AdminAuthenticationForm,
             #'template_name': self.login_template or 'xadmin/views/login.html',
-            'template_name': self.login_template or 'User/login.html',
+            'template_name': self.login_template or 'User/xadmin_login.html',
         }
         self.update_params(defaults)
         # return login(request, **defaults)
@@ -96,7 +96,7 @@ class LogoutView(BaseAdminView):
         self.update_params(defaults)
         # return logout(request, **defaults)
         return logout.as_view(**defaults)(request)
-        #return logout.as_view()(request)
+
 
     @never_cache
     def post(self, request, *args, **kwargs):

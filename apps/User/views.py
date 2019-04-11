@@ -37,17 +37,16 @@ class LoginView(View):
         remember = request.POST.get('remember')
         # 业务处理：登录校验
         user = authenticate(username=username, password=password)
-        name = user.last_name + user.first_name
         if user is not None:
             # 用户名密码正确
-
-            # 记录用户的登录状态
-            login(request, user)
             #跳转到相应用户的首页
             if figure == "1":
-                if user.is_student == True:
+                if user.user_type == 'student':
 
+                    # 记录用户的登录状态
+                    login(request, user)
                     # 跳转到学生的首页
+                    name = user.student.studentname
                     next_url = request.GET.get('next', reverse('Student:student'))
                     response = redirect(next_url)
                     response.set_cookie("studentname", bytes(name, 'utf8').
@@ -62,8 +61,12 @@ class LoginView(View):
                     return render(request, 'User/login.html', {'errmsg': '您不是学生,请重新选择您的登录入口'})
 
             elif figure == "2":
-                if user.is_teacher == True:
+                if user.user_type == 'teacher':
+
+                    # 记录用户的登录状态
+                    login(request, user)
                     # 跳转到教师的首页
+                    name = user.teacher.teachername
                     next_url = request.GET.get('next', reverse('Teacher:teacher'))
                     response = redirect(next_url)
                     response.set_cookie("studentname", bytes(name, 'utf8').
@@ -80,6 +83,8 @@ class LoginView(View):
             else:
                 if user.is_staff == True:
                     # 跳转到管理员的首页
+                    # 记录用户的登录状态
+                    login(request, user)
                     response = views.LoginView.as_view()(request)
                     if remember == 'rm':
                         response.set_cookie("username3", username, max_age=7 * 24 * 3600)

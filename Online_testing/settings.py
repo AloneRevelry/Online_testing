@@ -16,7 +16,7 @@ import sys
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # 把xadmin作为后台的搜索目录
-sys.path.insert(0,os.path.join(BASE_DIR,'extra_app'))
+sys.path.insert(0, os.path.join(BASE_DIR, 'extra_app'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
@@ -129,6 +129,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+# 指定收集静态文件的路径
+STATIC_ROOT = '/var/www/Online_testing/static'
 #设置静态文件保存目录
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
@@ -148,3 +150,7 @@ SESSION_CACHE_ALIAS = 'default'
 
 # django认证系统使用的模型类
 AUTH_USER_MODEL = 'User.User'
+
+# 配置登录url地址
+LOGIN_URL = '/login'
+

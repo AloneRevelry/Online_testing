@@ -1,24 +1,28 @@
 from django.shortcuts import render, redirect, reverse
 from django.views.generic import View
-from django.contrib.auth import login, authenticate,logout
+from django.contrib.auth import login, authenticate
 from xadmin import views
+from apps.User.models import Student
 
 
 class LoginView(View):
 
     '''登录'''
     def get(self, request):
-
+        checked = ''
         if 'username1' in request.COOKIES:
             username1 = request.COOKIES['username1']
+            checked = 'checked'
         else:
             username1 = ''
         if 'username2' in request.COOKIES:
             username2 = request.COOKIES['username2']
+            checked = 'checked'
         else:
             username2 = ''
         if 'username3' in request.COOKIES:
             username3 = request.COOKIES['username3']
+            checked = 'checked'
         else:
             username3 = ''
 
@@ -26,6 +30,7 @@ class LoginView(View):
             'username1': username1,
             'username2': username2,
             'username3': username3,
+            'checked': checked,
         })
 
     def post(self, request):
@@ -42,6 +47,14 @@ class LoginView(View):
             #跳转到相应用户的首页
             if figure == "1":
                 if user.user_type == 'student':
+                    ip = request.META['REMOTE_ADDR']
+                    if user.student.sip == None:
+                        astudent = Student.objects.get(studentname=user.student.studentname)
+                        astudent.sip = ip
+                        astudent.save()
+                    else:
+                        if user.student.sip != ip:
+                            return render(request, 'User/login.html', {'errmsg': '此用户已在其他电脑登录'})
 
                     # 记录用户的登录状态
                     login(request, user)

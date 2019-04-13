@@ -15,7 +15,7 @@ from xadmin.layout import FormHelper
 #from apps.User.views import LoginView as logout
 
 class IndexView(Dashboard):
-    title = _("Main Dashboard")
+    title = _("上机考试后台管理首页")
     icon = "fa fa-dashboard"
 
     def get_page_id(self):
@@ -61,8 +61,8 @@ class LoginView(BaseAdminView):
             'extra_context': context,
             # 'current_app': self.admin_site.name,
             'authentication_form': self.login_form or AdminAuthenticationForm,
-            #'template_name': self.login_template or 'xadmin/views/login.html',
-            'template_name': self.login_template or 'User/xadmin_login.html',
+            'template_name': self.login_template or 'xadmin/views/login.html',
+            #'template_name': self.login_template or 'User/xadmin_login.html',
         }
         self.update_params(defaults)
         # return login(request, **defaults)

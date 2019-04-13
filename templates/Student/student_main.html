@@ -1,0 +1,64 @@
+{% extends 'Student/student_base.html' %}
+    {% block context %}
+    <div class="container">
+		<div class="row">
+			<div class="form-inline">
+				<img src="../../resource/student.jpg" class="img-rounded"
+					style="float: left; height: 60px;" />
+				<h1>
+					<strong>上机考试考试进行中</strong>
+				</h1>
+			</div>
+		</div>
+		<hr />
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-6" style="height: 100px">
+					<h2>
+						<strong>试卷下载</strong>
+					</h2>
+
+					<a class="btn btn-info glyphicon glyphicon-cloud-download"
+						href="../../servlet_download"> 下载查看</a>
+				</div>
+				<div class="col-lg-6" style="height: 200px">
+					<h2>
+						<strong>答案上传</strong>
+					</h2>
+					<p>请按照考试要求将答案文件打包,再次进行上传.同名文件多次上传将会覆盖.</p>
+
+					<form action="../../servlet_upload" method="post"
+						enctype="multipart/form-data">
+
+						<div class="form-inline">
+
+							<button type="button" onclick="path.click()"  class="btn btn-info glyphicon glyphicon-folder-open"> 浏览</button>
+
+							<input type="text" name="upfile" id="upfile" class="form-control" placeholder="未选择文件" readonly="readonly">
+
+							<input type="file" id="path" name="upload" style="display: none" onchange="upfile.value=this.value">
+
+							<button type="submit" class="btn btn-info glyphicon glyphicon-cloud-upload" style="display: inline; float: right"> 上传</button>
+
+						</div>
+
+					</form>
+
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<h2>
+			<strong>通知消息</strong>
+		</h2>
+		<table class="table table-striped table-bordered table-hover">
+			<thead>
+				<tr>
+					<td>通知内容</td>
+				</tr>
+			</thead>
+
+		</table>
+	</div>
+    {% endblock %}

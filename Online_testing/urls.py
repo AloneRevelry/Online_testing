@@ -22,5 +22,6 @@ urlpatterns = [
     path('xadmin/', xadmin.site.urls),
     path('', include('apps.User.urls', namespace='User')),
     path('', include('apps.Student.urls', namespace='Student')),
+    path('', include('apps.Teacher.urls', namespace='Teacher')),
 
 ]

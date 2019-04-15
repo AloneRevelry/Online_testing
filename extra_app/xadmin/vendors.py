@@ -19,7 +19,7 @@ vendors = {
     'jquery': {
         "js": {
             'dev': 'xadmin/vendor/jquery/jquery.js',
-            'production': 'xadmin/vendor/jquery/jquery.min.js',
+            'production': 'xadmin/vendor/jquery/teacher_jquery-2.1.1.min.js',
         }
     },
     'jquery-ui-effect': {

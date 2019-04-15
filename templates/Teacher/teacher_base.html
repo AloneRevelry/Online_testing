@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>教师后台管理</title>
+
+    <!--默认样式-->
+	<link rel="stylesheet" href="/static/css/reset.css">
+	<!--响应式框架-->
+	<link rel="stylesheet" type="text/css" href="/static/css/bootstrap.css">
+	<!--导航样式-->
+	<link rel="stylesheet" href="/static/css/head.css" />
+    <link href="/static/css/body.css" rel='stylesheet' type='text/css' />
+
+     <script>
+        function mytime(){
+        var a = new Date();
+        var b = a.toLocaleTimeString();
+        var c = a.toLocaleDateString();
+        document.getElementById("Time").innerHTML = c+"&nbsp"+b;
+        }
+        setInterval(function() {mytime()},1000);
+     </script>
+
+</head>
+<body>
+    <ul class="Head">
+        <li class="Logo">
+            <img src="/static/images/Logo.png" align="left">
+        </li>
+        <li class="Title">
+           <h1>上机考试系统</h1>
+        </li>
+        <li class="Time" id="Time">
+
+        </li>
+    </ul>
+
+    <!-- 导航 -->
+	<header class="header">
+
+			<div class="fr nav">
+				<ul class="navbar_nav" data-in="fadeInDown" data-out="fadeOutUp">
+					<li  style="border: none;margin-left: 20%" class="home">
+						<a href="javascript:void(0)">首页</a>
+                    </li>
+                    <li class="new">
+						<a href="javascript:void(0)">新建考试</a>
+                    </li>
+					<li class="dropdown edit">
+						<a href="javascript:void(0)">
+							编辑考试
+                        </a>
+						<div class="dropdown_menu">
+							<a href="#">试卷上传</a>
+                            <a href="#">答卷下载</a>
+							<a href="#">学生名单导入</a>
+							<a href="#">开启考试</a>
+                            <a href="#">结束考试</a>
+                        </div>
+					</li>
+                    <li class="info">
+						<a href="javascript:void(0)">考试情况</a>
+                    </li>
+					<li class="dropdown manage">
+						<a href="javascript:void(0)">学生管理</a>
+						<div class="dropdown_menu">
+							<a href="#">学生信息管理</a>
+							<a href="#">解除学生登录锁定</a>
+                            <a href="#">导出提交信息</a>
+                        </div>
+					</li>
+                    <li class="clean">
+						<a href="javascript:void(0)">考试清理和删除</a>
+                    </li>
+                    <li style="border: none;" class="note">
+						<a href="javascript:void(0)">通知管理</a>
+                    </li>
+                    <li class="welcome">欢迎，{{ teachername }}</li>
+                    <li style="border: none;" class="logout">
+						<a href="/teacher/logout">注销</a>
+                    </li>
+
+				</ul>
+
+
+		</div>
+
+	</header>
+    <script src="/static/js/jquery.min.js"></script>
+
+    {% block context %}
+    {% endblock %}
+
+</body>
+</html>

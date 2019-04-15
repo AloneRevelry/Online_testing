@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
 from django.views.generic import View
 from utils.mixin import LoginRequiredMixin
-
+from apps.User.models import User
+from django.contrib.auth import logout
 
 class StudentView(LoginRequiredMixin, View):
 
@@ -14,3 +15,9 @@ class StudentView(LoginRequiredMixin, View):
 
     def post(self, request):
         pass
+
+
+def logout_view(request):
+    logout(request)
+
+    return redirect('/login')

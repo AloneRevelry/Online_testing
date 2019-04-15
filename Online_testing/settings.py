@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'apps.User',
     'apps.Student',
+    'apps.Teacher',
     'xadmin',
     'crispy_forms',
 ]

@@ -1,16 +1,6 @@
 {% extends 'Student/student_base.html' %}
     {% block context %}
-    <div class="container">
-		<div class="row">
-			<div class="form-inline">
-				<img src="../../resource/student.jpg" class="img-rounded"
-					style="float: left; height: 60px;" />
-				<h1>
-					<strong>上机考试考试进行中</strong>
-				</h1>
-			</div>
-		</div>
-		<hr />
+    <div class="container" style="position: relative;top: 50px;">
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-6" style="height: 100px">
@@ -19,7 +9,7 @@
 					</h2>
 
 					<a class="btn btn-info glyphicon glyphicon-cloud-download"
-						href="../../servlet_download"> 下载查看</a>
+						href="#" style="top: 23px"> 下载查看</a>
 				</div>
 				<div class="col-lg-6" style="height: 200px">
 					<h2>
@@ -27,8 +17,9 @@
 					</h2>
 					<p>请按照考试要求将答案文件打包,再次进行上传.同名文件多次上传将会覆盖.</p>
 
-					<form action="../../servlet_upload" method="post"
+					<form action="#" method="post"
 						enctype="multipart/form-data">
+                        {% csrf_token %}
 
 						<div class="form-inline">
 

@@ -1,0 +1,208 @@
+
+
+/*左侧logo*/
+.Head{
+   	display: -webkit-flex;
+    display: -webkit-box;
+    display: -moz-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -moz-box-pack: center;
+    -ms-flex-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+}
+.Head li{
+
+    display: inline-block;
+    width: 100%;
+	height: 100px;
+    border-bottom: 1px solid rgba(252, 254, 255, 0.31);
+
+    text-align: center;
+    line-height: 100px;
+    text-decoration: none;
+    font-family: 'Microsoft Yahei'
+}
+
+.Head .Logo{
+	width: 20%;
+}
+.Head .Title{
+	width: 60%;
+}
+.Head .Time{
+	width: 20%;
+	text-align: right;
+	padding-right: 20px;
+	font-size: 20px;
+}
+h1 {
+	align-content: center;
+	font-size: 60px;
+    font-weight: 500;
+    text-transform: capitalize;
+    color: #00578d;
+    text-shadow: 1px 1px 1px #000;
+    letter-spacing: 2px;
+	margin: 0px;
+	margin-top: 1%;
+	height: 100%;
+    text-align: center;
+    font-family: 'Catamaran', sans-serif;
+}
+/*====================导航*********/
+.header{
+	width:100%;
+	position:fixed;
+	top:100px;
+	left:0%;
+	padding: 0;
+	z-index:999;
+	height:50px;
+	background: rgba(0, 139, 139, 0.4);
+}
+/*右侧*/
+.header .nav{
+	-webkit-transition: 0.5s;
+	-moz-transition: 0.5s;
+	-o-transition: 0.5s;
+	transition: 0.5s;
+	height: 100%;
+	line-height: 50px;
+	display: block;
+	width: 100%;
+}
+.header .navbar_nav li{
+	float:left;
+	position: relative;
+	display: block;
+	border: 1px solid rgba(252, 254, 255, 0.31);
+	border-top-style: none;
+	border-bottom-style: none;
+	list-style: none;
+	padding-left: 5px;
+}
+.header .navbar_nav .home{
+	background: url("/static/images/home.png") no-repeat 2px;
+}
+.header .navbar_nav .new{
+	background: url("/static/images/add.png") no-repeat 2px;
+}
+.header .navbar_nav .edit{
+	background: url("/static/images/write.png") no-repeat 2px;
+}
+.header .navbar_nav .info{
+	background: url("/static/images/more.png") no-repeat 2px;
+}
+.header .navbar_nav .manage{
+	background: url("/static/images/data.png") no-repeat 2px;
+}
+.header .navbar_nav .clean{
+	background: url("/static/images/delete.png") no-repeat 2px;
+}
+.header .navbar_nav .note{
+	background: url("/static/images/tips.png") no-repeat 2px;
+}
+.header .navbar_nav .logout{
+	background: url("/static/images/exit.png") no-repeat 2px;
+}
+.header .navbar_nav .seesubmit{
+	background: url("/static/images/about.png") no-repeat 2px;
+}
+.header .navbar_nav .welcome1{
+	width: 44%;
+	border: none;
+	font-size: 20px;
+	color:  #000079;
+	text-align: right;
+	padding-right: 15px;
+}
+.header .navbar_nav .welcome1:after{
+	background: transparent;
+}
+
+.header .navbar_nav .welcome{
+	width: 28%;
+	border: none;
+	font-size: 20px;
+	color:  #000079;
+	text-align: right;
+	padding-right: 15px;
+}
+.header .navbar_nav .welcome:after{
+	background: transparent;
+}
+.header .navbar_nav li:after{
+    content: "";
+    width: 0;
+    height: 2px;
+    background: orangered;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    transition: all 0.5s ease 0s;
+}
+.header .navbar_nav li:hover:after{
+    width: 100%;
+}
+.header .navbar_nav li a{
+	text-decoration: none;
+	height: 100%;
+	padding: 0 25px;
+	display: block;
+	-webkit-transition: 0.5s;
+	-moz-transition: 0.5s;
+	-o-transition: 0.5s;
+	transition: 0.5s;
+	color: #000079;
+	font-size: 16px;
+
+}
+.header .navbar_nav li:hover a{
+	color: orangered;
+}
+.header .navbar_nav li.dropdown{
+	display: inherit;
+	position: relative;
+}
+
+.header .navbar_nav li.dropdown .dropdown_menu{
+	display: none;
+	position: absolute;
+	top:50px;
+	width: 100%;
+	background: #fff;
+	box-shadow: 0 15px 27px 0 rgba(167,165,165,0.38);
+	width: 120%;
+    left: -10%;
+}
+.header .navbar_nav li.dropdown .dropdown_menu a{
+	font-size: 14px;
+	color: #666;
+	padding: 0 10px;
+	line-height: 40px;
+	text-align: center;
+	background:  honeydew;
+	margin-bottom: 2px;
+}
+.header .navbar_nav li.dropdown:hover .dropdown_menu{
+	display: block;
+	background: #f3f3f3;
+	-webkit-transition: 0.5s;
+	-moz-transition: 0.5s;
+	-o-transition: 0.5s;
+	transition: 0.5s;
+}
+.header .navbar_nav li.dropdown:hover .dropdown_menu a{
+	color: #666;
+}
+.header .navbar_nav li.dropdown:hover .dropdown_menu a:hover{
+	color: #fff;
+	background: orange;
+}
+

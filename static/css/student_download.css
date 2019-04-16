@@ -1,0 +1,20 @@
+.box{
+    width:100%;
+	position:fixed;
+    top: 200px;
+	left:0%;
+	padding: 0;
+	z-index:999;
+	background: rgba(0, 139, 139, 0.4);
+}
+
+
+.box .filelists li{
+
+
+}
+.box .filelists li a{
+
+     font-size: 30px;
+    color: #002a80;
+}

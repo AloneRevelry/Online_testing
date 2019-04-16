@@ -1,5 +1,6 @@
 {% extends 'Student/student_base.html' %}
-    {% block context %}
+
+ {% block content %}
     <div class="container" style="position: relative;top: 50px;">
 		<div class="container">
 			<div class="row">
@@ -9,7 +10,7 @@
 					</h2>
 
 					<a class="btn btn-info glyphicon glyphicon-cloud-download"
-						href="#" style="top: 23px"> 下载查看</a>
+						href="/student/download" style="top: 23px"> 下载查看</a>
 				</div>
 				<div class="col-lg-6" style="height: 200px">
 					<h2>
@@ -34,6 +35,14 @@
 						</div>
 
 					</form>
+                    {% if messages %}
+                        <script>
+                            {% for msg in messages %}
+                                alert('{{ msg.message }}');
+                            {% endfor %}
+                        </script>
+                    {% endif %}
+
 
 				</div>
 			</div>

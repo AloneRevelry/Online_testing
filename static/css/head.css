@@ -58,7 +58,7 @@ h1 {
 /*====================导航*********/
 .header{
 	width:100%;
-	position:fixed;
+	position:relative;
 	top:100px;
 	left:0%;
 	padding: 0;

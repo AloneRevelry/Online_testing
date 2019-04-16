@@ -6,11 +6,12 @@ from django.http import StreamingHttpResponse
 from django.contrib import messages
 import os
 
+studentname = ''
 
 class StudentView(LoginRequiredMixin, View):
 
     def get(self, request):
-
+        global studentname
         studentname = request.COOKIES.get('studentname')
         studentname = studentname.encode("iso-8859-1").decode('utf8')
         return render(request, 'Student/student_main.html', {'studentname': studentname})
@@ -42,16 +43,31 @@ def logout_view(request):
 files = []
 def download_view(request):
 
-    filepath = '/home/alonerevelry/Online_testing/templates/Student'
+    filepath = '/home/alonerevelry/Online_testing/apps'
     global files
     if files:
         files = []
 
-    for file in os.listdir(filepath):
-        file_path = os.path.join(filepath, file)
-        files.append({'filename': file, 'filepath': file_path})
+    def get_file(filepath, files):
+        for file in os.listdir(filepath):
+            file_path = os.path.join(filepath, file)
+            if os.path.isdir(file_path):
+                get_file(file_path, files)
+            else:
+                filename = file.split('.')[0]
+                filesize = os.path.getsize(file_path)/1000
+                files.append({
+                    'filename': filename,
+                    'filepath': file_path,
+                    'file': file,
+                    'filesize': float(filesize),
+                })
+    get_file(filepath, files)
 
-    return render(request, 'Student/student_download.html', {'files': files})
+    return render(request, 'Student/student_download.html', {
+        'files': files,
+        'studentname': studentname,
+    })
 
 
 def download_file(request):
@@ -60,7 +76,7 @@ def download_file(request):
     file = files[id-1]
     response = StreamingHttpResponse(readFile(file['filepath']))
     response['Content-Type'] = 'application/octet-stream'
-    response['Content-Disposition'] = 'attachment;filename="{0}"'.format(file['filename'])
+    response['Content-Disposition'] = 'attachment;filename="{0}"'.format(file['file'])
     return response
 
 

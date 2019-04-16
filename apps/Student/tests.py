@@ -14,6 +14,4 @@ def getfile(filepath):
 
 
 #递归遍历/root目录下所有文件
-#getfile('/home/alonerevelry/Online_testing/templates')
-files = [{'filename': 'student_download.html', 'file_path': '/home/alonerevelry/Online_testing/templates/Student/student_download.html'}, {'filename': 'student_main.html', 'file_path': '/home/alonerevelry/Online_testing/templates/Student/student_main.html'}, {'filename': 'student_base.html', 'file_path': '/home/alonerevelry/Online_testing/templates/Student/student_base.html'}]
-print(files[0]['filename'])
+getfile('/home/alonerevelry/Online_testing')

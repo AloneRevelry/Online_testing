@@ -12,6 +12,7 @@
 	<link rel="stylesheet" href="/static/css/head.css" />
     <link href="/static/css/body.css" rel='stylesheet' type='text/css' />
 
+
      <script>
         function mytime(){
         var a = new Date();
@@ -20,45 +21,65 @@
         document.getElementById("Time").innerHTML = c+"&nbsp"+b;
         }
         setInterval(function() {mytime()},1000);
+
      </script>
 
 </head>
 <body>
-    <ul class="Head">
-        <li class="Logo">
-            <img src="/static/images/Logo.png" align="left">
-        </li>
-        <li class="Title">
-           <h1>上机考试系统</h1>
-        </li>
-        <li class="Time" id="Time">
-
-        </li>
-    </ul>
-
     <!-- 导航 -->
 	<header class="header">
+        <ul class="ul1">
+            <li class="Logo">
+                <img src="/static/images/Logo.png" align="left">
+            </li>
+            <li class="Title" id="Title">
+               上机考试系统
+            </li>
+            <li class="Time" id="Time">
 
-			<div class="fr nav">
-				<ul class="navbar_nav" data-in="fadeInDown" data-out="fadeOutUp">
-					<li  style="border: none;margin-left: 40%" class="home">
-						<a href="/student">首页</a>
-                    </li>
-                    <li class="seesubmit" style="border: none">
-						<a href="javascript:void(0)">查看提交</a>
-                    </li>
-                    <li class="welcome1">欢迎，{{ studentname }}</li>
-                    <li style="border: none;" class="logout">
-						<a href="/student/logout">注销</a>
-                    </li>
+            </li>
+        </ul>
+        <div class="fr nav">
+            <ul class="navbar_nav" >
+                <li  style="border: none;margin-left: 40%" class="home">
+                    <a href="/student">首页</a>
+                </li>
+                <li class="seesubmit" style="border: none">
+                    <a href="/student/fileinfo">查看提交</a>
+                </li>
+                <li style="border: none;" class="logout">
+                    <a href="/student/logout">注销</a>
+                </li>
 
-				</ul>
-
-
+            </ul>
 		</div>
+        <a href="javascript:void(0)" id="navToggle">
+            <span></span>
+        </a>
+         <!--移动端的导航-->
+	    <div class="m_nav">
+            <div class="top clearfix">
+                <img src="/static/images/closed.png" alt="" class="closed" />
+            </div>
+            <ul class="ul" data-in="fadeInDown" data-out="fadeOutUp">
+                <li class="active">
+                    <a href="/student">首页</a>
+                </li>
+                <li>
+                    <a href="/student/fileinfo">查看提交</a>
+                </li>
+                <li>
+                    <a href="/student/logout">注销</a>
+                </li>
+            </ul>
+        </div>
 
 	</header>
     <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/Teacher/jquery.fullPage.min.js"></script>
+	<script src="/static/js/Teacher/index_slick.js"></script>
+	<script src="/static/js/Teacher/index.js"></script>
+    <script src="/static/js/font.js"></script>
 
     {% block content %}
     {% endblock %}

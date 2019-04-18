@@ -1,0 +1,22 @@
+{% extends 'Student/student_base.html' %}
+
+{% block content %}
+    <style>
+        h1{
+            position: relative;
+            top: 180px;
+        }
+        textarea{
+            position: relative;
+            top: 200px;
+            width: 640px;
+            height: 500px;
+            background: darkgrey;
+            font-size: 25px;
+        }
+    </style>
+        <h1>{{ filename }}</h1>
+        <textarea readonly="true" name="ds">{{ data }}</textarea>
+
+
+{% endblock %}

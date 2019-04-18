@@ -41,14 +41,17 @@ $('.section1 .next').click(function(){
 
 //导航
 //超过一定高度导航添加类名
-var nav=$("header"); //得到导航对象  
+var nav=$("header"); //得到导航对象
 var win=$(window); //得到窗口对象  
-var sc=$(document);//得到document文档对象。  
+var sc=$(document);//得到document文档对象。
+var nav1=$("Head");
 win.scroll(function(){  
-  if(sc.scrollTop()>=100){  
-    nav.addClass("on");   
+  if(sc.scrollTop()>=10){
+    nav.addClass("on");
+    nav1.addClass("on");
   }else{  
-   nav.removeClass("on");  
+   nav.removeClass("on");
+   nav1.removeClass("on");
   }  
 })   
 

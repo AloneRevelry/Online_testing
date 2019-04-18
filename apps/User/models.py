@@ -23,7 +23,7 @@ class Student(models.Model):
 
     studentname = models.CharField(max_length=20, verbose_name='姓名')
     sip = models.CharField(max_length=20, blank=True, null=True, verbose_name='绑定ip地址')
-    submittime = models.DateField(blank=True, null=True, verbose_name='提交时间')
+    submittime = models.DateTimeField(blank=True, null=True, verbose_name='提交时间')
     user_id = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name='学号')
 
     class Meta:

@@ -24,24 +24,24 @@
 
 </head>
 <body>
-    <ul class="Head">
-        <li class="Logo">
-            <img src="/static/images/Logo.png" align="left">
-        </li>
-        <li class="Title">
-           <h1>上机考试系统</h1>
-        </li>
-        <li class="Time" id="Time">
-
-        </li>
-    </ul>
 
     <!-- 导航 -->
 	<header class="header">
+        <ul class="ul1">
+            <li class="Logo">
+                <img src="/static/images/Logo.png" align="left">
+            </li>
+            <li class="Title" id="Title">
+               上机考试系统
+            </li>
+            <li class="Time" id="Time">
 
+            </li>
+        </ul>
+        <div class="container clearfix">
 			<div class="fr nav">
 				<ul class="navbar_nav" data-in="fadeInDown" data-out="fadeOutUp">
-					<li  style="border: none;margin-left: 20%" class="home">
+					<li  style="border: none;" class="home">
 						<a href="javascript:void(0)">首页</a>
                     </li>
                     <li class="new">
@@ -76,18 +76,69 @@
                     <li style="border: none;" class="note">
 						<a href="javascript:void(0)">通知管理</a>
                     </li>
-                    <li class="welcome">欢迎，{{ teachername }}</li>
                     <li style="border: none;" class="logout">
-						<a href="/teacher/logout">注销</a>
+						<a hf="/teacher/logout">注销</a>
                     </li>
-
 				</ul>
-
-
+		    </div>
+            <a href="javascript:void(0)" id="navToggle">
+	            <span></span>
+	        </a>
+        </div>
+        <!--移动端的导航-->
+	    <div class="m_nav">
+		<div class="top clearfix">
+			<img src="/static/images/closed.png" alt="" class="closed" />
 		</div>
+        <ul class="ul" data-in="fadeInDown" data-out="fadeOutUp">
+            <li class="active">
+						<a href="/teacher">首页</a>
+                    </li>
+            <li>
+                <a href="javascript:void(0)">新建考试</a>
+            </li>
+            <li class="dropdown">
+                <a href="javascript:void(0)">
+                    编辑考试
+                </a>
+                <div class="dropdown_menu">
+                    <a href="#">试卷上传</a>
+                    <a href="#">答卷下载</a>
+                    <a href="#">学生名单导入</a>
+                    <a href="#">开启考试</a>
+                    <a href="#">结束考试</a>
+                </div>
+            </li>
+            <li>
+                <a href="javascript:void(0)">考试情况</a>
+            </li>
+            <li class="dropdown">
+                <a href="javascript:void(0)">学生管理</a>
+                <div class="dropdown_menu">
+                    <a href="#">学生信息管理</a>
+                    <a href="#">解除学生登录锁定</a>
+                    <a href="#">导出提交信息</a>
+                </div>
+            </li>
+            <li>
+                <a href="javascript:void(0)">考试清理和删除</a>
+            </li>
+            <li>
+                <a href="javascript:void(0)">通知管理</a>
+            </li>
+            <li>
+                <a href="/teacher/logout">注销</a>
+            </li>
+        </ul>
+    </div>
 
 	</header>
     <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/Teacher/jquery.fullPage.min.js"></script>
+	<script src="/static/js/Teacher/index_slick.js"></script>
+	<script src="/static/js/Teacher/index.js"></script>
+    <script src="/static/js/font.js"></script>
+
 
     {% block context %}
     {% endblock %}

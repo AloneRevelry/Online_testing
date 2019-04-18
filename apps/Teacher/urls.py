@@ -1,6 +1,6 @@
 
 from django.urls import path
-from apps.Teacher.views import TeacherView, logout_view
+from apps.Teacher.views import *
 
 app_name = '[Teacher]'
 urlpatterns = [

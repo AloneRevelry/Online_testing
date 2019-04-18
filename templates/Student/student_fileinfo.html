@@ -1,0 +1,28 @@
+{% extends 'Student/student_base.html' %}
+
+{% block content %}
+    <link rel="stylesheet" href="/static/css/student_download.css">
+
+    <div class="table-wrapper">
+    <table class="fl-table">
+        <caption>已上传的文件</caption>
+        <thead>
+            <tr>
+                <th>文件名</th>
+                <th>文件大小</th>
+                <th>上传时间</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for file in files %}
+            <tr>
+                <td><a href="/student/fileinfo/filedata?id={{ file.id }}">{{ file.Filename }}</a></td>
+                <td>{{ file.Filesize }}</td>
+                <th>{{ file.Filetime }}</th>
+            </tr>
+        {% endfor %}
+        <tbody>
+    </table>
+</div>
+
+{% endblock %}

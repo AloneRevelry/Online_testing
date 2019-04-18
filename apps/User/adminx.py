@@ -1,5 +1,6 @@
 import xadmin
 from apps.User.models import Student, Teacher, User
+from apps.Student.models import Files
 from xadmin import views
 from django import forms
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
@@ -132,6 +133,10 @@ class StudentAdmin(object):
     list_per_page = 10  # 指定每页显示10条数据
     list_display = ['user_id', 'studentname', 'sip', 'submittime']
 
+class FilesAdmin(object):
+    list_per_page = 10  # 指定每页显示10条数据
+    list_display = ['Filename', 'Filetime', 'Filesize', 'student']
+
 
 class TeacherAdmin(object):
     list_per_page = 10  # 指定每页显示10条数据
@@ -143,3 +148,4 @@ xadmin.site.register(views.BaseAdminView, BaseSetting)
 xadmin.site.register(Student, StudentAdmin)
 xadmin.site.register(Teacher, TeacherAdmin)
 xadmin.site.register(User, CustomAdmin)
+xadmin.site.register(Files, FilesAdmin)

@@ -1,0 +1,31 @@
+{% extends 'Teacher/teacher_base.html' %}
+
+{% block context %}
+    <link href="/static/css/style.css" rel='stylesheet' type='text/css' />
+    <style>
+        form{
+            position: relative;
+            top: 200px;
+        }
+        h2{
+            position: relative;
+            top: 180px;
+            font-size: 25px;
+
+        }
+    </style>
+    <h2>解锁学生ip</h2>
+    <div  class="w3ls-login box">
+        <form method="post">
+            {% csrf_token %}
+            <div class="agile-field-txt">
+                <input type="text" name="studentid" placeholder="请输入学生学号"/>
+            </div>
+            <label style="color: {{ color }}">{{ msg }}</label>
+            <div class="w3ls-bot">
+                <input type="submit" value="解锁ip"/>
+            </div>
+        </form>
+    </div>
+
+{% endblock %}

@@ -40,9 +40,11 @@ class LoginView(View):
         username = request.POST.get('username')
         password = request.POST.get('password')
         remember = request.POST.get('remember')
+
         # 业务处理：登录校验
         user = authenticate(username=username, password=password)
         if user is not None:
+
             # 用户名密码正确
             #跳转到相应用户的首页
             if figure == "1":
@@ -64,6 +66,7 @@ class LoginView(View):
                     response = redirect(next_url)
                     response.set_cookie("studentname", bytes(name, 'utf8').
                                         decode('ISO-8859-1'), max_age=7 * 24 * 3600)
+                    response.set_cookie('username', username)
                     if remember == 'rm':
                         response.set_cookie("username1", username, max_age=7*24*3600)
                     else:
@@ -82,8 +85,9 @@ class LoginView(View):
                     name = user.teacher.teachername
                     next_url = request.GET.get('next', reverse('Teacher:teacher'))
                     response = redirect(next_url)
-                    response.set_cookie("studentname", bytes(name, 'utf8').
+                    response.set_cookie("teachername", bytes(name, 'utf8').
                                         decode('ISO-8859-1'), max_age=7 * 24 * 3600)
+                    response.set_cookie('username', username)
                     if remember == 'rm':
                         response.set_cookie("username2", username, max_age=7 * 24 * 3600)
                     else:
@@ -102,7 +106,7 @@ class LoginView(View):
                     if remember == 'rm':
                         response.set_cookie("username3", username, max_age=7 * 24 * 3600)
                     else:
-                        if 'username1' in request.COOKIES:
+                        if 'username3' in request.COOKIES:
                             response.delete_cookie('username3')
                     return response
                 else:

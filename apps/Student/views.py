@@ -5,8 +5,9 @@ from django.contrib.auth import logout
 from django.http import StreamingHttpResponse
 from django.contrib import messages
 import os
-from apps.User.models import Student
+from apps.User.models import Student, User
 from apps.Student.models import Files
+from datetime import datetime
 
 studentname = ''
 
@@ -28,14 +29,21 @@ class StudentView(LoginRequiredMixin, View):
             studentname = studentname.encode("iso-8859-1").decode('utf8')
             size = '%skb' % str(file.size/1000)
             student = Student.objects.get(studentname=studentname)
+            student.submittime = datetime.now()
             student_file = Files.objects.create(Filename=file.name,
                                                 Filesize=size,
                                                 Filedata=file.read(),
                                                 student=student
                                                 )
             student_file.save()
+            student.save()
+            path = '/home/alonerevelry/Online_testing_file/Student/%s' \
+                   % str(student.teacher.user_id)
+            if not os.path.exists(path):
+                os.mkdir(path)
 
-            path = '/home/alonerevelry/UpFiles/%s' % studentname
+            path = '/home/alonerevelry/Online_testing_file/Student/%s/%s' \
+                   % (str(student.teacher.user_id), studentname)
             if not os.path.exists(path):
                 os.mkdir(path)
             content = open('%s/%s' % (path, file.name), 'wb+')
@@ -57,8 +65,9 @@ files = []
 
 class Download(LoginRequiredMixin, View):
     def get(self, request):
-
-        filepath = '/home/alonerevelry/Online_testing/apps'
+        student = User.objects.get(username='1610121106').student
+        teacherid = str(student.teacher.user_id)
+        filepath = '/home/alonerevelry/Online_testing_file/Teacher/%s/upload' % teacherid
         global files
         if files:
             files = []

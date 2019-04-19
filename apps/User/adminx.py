@@ -135,7 +135,13 @@ class StudentAdmin(object):
 
 class FilesAdmin(object):
     list_per_page = 10  # 指定每页显示10条数据
-    list_display = ['Filename', 'Filetime', 'Filesize', 'student']
+    list_display = ['Filename', 'Filetime', 'Filesize', 'studentid']
+
+    def studentid(self, obj):
+        student = Student.objects.get(id=obj.student_id)
+        return student.user_id
+
+
 
 
 class TeacherAdmin(object):

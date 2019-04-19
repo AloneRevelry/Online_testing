@@ -5,7 +5,7 @@ from django.contrib.auth.models import AbstractUser
 class User(AbstractUser):
     user_type_choices = (
         ('student', '学生'),
-        ('teahcer', '教师')
+        ('teacher', '教师')
     )
     is_staff_choices = (
         (False, '非管理员'),
@@ -19,18 +19,6 @@ class User(AbstractUser):
         verbose_name_plural = verbose_name
 
 
-class Student(models.Model):
-
-    studentname = models.CharField(max_length=20, verbose_name='姓名')
-    sip = models.CharField(max_length=20, blank=True, null=True, verbose_name='绑定ip地址')
-    submittime = models.DateTimeField(blank=True, null=True, verbose_name='提交时间')
-    user_id = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name='学号')
-
-    class Meta:
-        db_table = 'student_info'
-        verbose_name = '学生信息'
-        verbose_name_plural = verbose_name
-
 
 class Teacher(models.Model):
 
@@ -40,4 +28,18 @@ class Teacher(models.Model):
     class Meta:
         db_table = 'teacher_info'
         verbose_name = '教师信息'
+        verbose_name_plural = verbose_name
+
+
+class Student(models.Model):
+
+    studentname = models.CharField(max_length=20, verbose_name='姓名')
+    sip = models.CharField(max_length=20, blank=True, null=True, verbose_name='绑定ip地址')
+    submittime = models.DateTimeField(blank=True, null=True, verbose_name='提交时间')
+    user_id = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name='学号')
+    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
+
+    class Meta:
+        db_table = 'student_info'
+        verbose_name = '学生信息'
         verbose_name_plural = verbose_name

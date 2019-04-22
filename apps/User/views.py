@@ -2,7 +2,9 @@ from django.shortcuts import render, redirect, reverse
 from django.views.generic import View
 from django.contrib.auth import login, authenticate
 from xadmin import views
-from apps.User.models import Student
+from apps.User.models import Student, User
+from apps.Teacher.models import Examinfo
+
 
 
 class LoginView(View):
@@ -49,6 +51,11 @@ class LoginView(View):
             #跳转到相应用户的首页
             if figure == "1":
                 if user.user_type == 'student':
+
+                    Class = User.objects.get(username=username).student.Class
+
+                    if not Class.exam_flag:
+                        return render(request, 'User/login.html', {'errmsg': '考试未开始,请稍等'})
                     ip = request.META['REMOTE_ADDR']
                     if user.student.sip == None:
                         astudent = Student.objects.get(studentname=user.student.studentname)

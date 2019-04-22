@@ -1,0 +1,50 @@
+{% extends 'Teacher/teacher_base.html' %}
+
+{% block context %}
+    <link rel="stylesheet" href="/static/css/student_download.css">
+    <link href="/static/css/style.css" rel='stylesheet' type='text/css' />
+
+    <div class="table-wrapper">
+        <table class="fl-table">
+            <caption>已创建的考试</caption>
+            <thead>
+                <tr>
+                    <th>考试名称</th>
+                    <th>开始时间</th>
+                    <th>考试状态</th>
+                    <th>开启考试</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for exam in exams %}
+                    <tr>
+
+                            <td>{{ exam.Examtitle }}</td>
+                            <td>{{ exam.Examstarttime }}</td>
+                            <td>
+                               {% if exam.Examstatus == 1 %}
+                                   <label style="color: red;font-style: oblique;font-weight: bold">已开始</label>
+                               {% elif exam.Examstatus == 0 %}
+                                   <label style="color: yellow;font-style: oblique;font-weight: bold">未开始</label>
+                                {% else%}
+                                   <label style="color: grey;font-style: oblique;font-weight: bold">已结束</label>
+                               {% endif %}
+                            </td>
+                            <th>
+                                <form method="post">
+                                    {% csrf_token %}
+                                    <div class="w3ls-login">
+                                        <input type="text" name="id" value="{{ exam.id }}" hidden>
+                                        <input type="submit" value="开启">
+                                    </div>
+                                </form>
+                            </th>
+                    </tr>
+                {% endfor %}
+            <tbody>
+        </table>
+    </div>
+
+
+
+{% endblock %}

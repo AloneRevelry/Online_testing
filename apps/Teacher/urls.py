@@ -9,5 +9,9 @@ urlpatterns = [
     path('teacher/unlockip', UnlockIpView.as_view(), name='unlockip'),
     path('teacher/fileupload', FileUpload.as_view(), name='fileupload'),
     path('teacher/filedownload', FileDownload.as_view(), name='filedownload'),
+    path('teacher/newexam', NewExamView.as_view(), name='newexam'),
+    path('teacher/startexam', StartExamView.as_view(), name='startexam'),
+    path('teacher/endexam', EndExamView.as_view(), name='endexam'),
+    path('teacher/importstudents',ImportStudentsView.as_view() , name='importstudents'),
 
 ]

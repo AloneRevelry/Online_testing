@@ -11,6 +11,7 @@
 	<!--导航样式-->
 	<link rel="stylesheet" href="/static/css/head.css" />
     <link href="/static/css/body.css" rel='stylesheet' type='text/css' />
+    <link href="/static/css/skin.css" rel="stylesheet" type="text/css"/>
 
 
      <script>
@@ -80,7 +81,15 @@
 	<script src="/static/js/Teacher/index_slick.js"></script>
 	<script src="/static/js/Teacher/index.js"></script>
     <script src="/static/js/font.js"></script>
-
+    <script src="/static/js/jquery-1.7.2.min.js" type="text/javascript"></script>
+    <script src="/static/js/Cxc-Dialog.js" type="text/javascript"></script>
+    <script>
+        {% if messages %}
+            {% for msg in messages %}
+                    CxcDialog('提示框', '{{ msg }}', '{{ msg.tags }}');
+            {% endfor %}
+        {% endif %}
+    </script>
     {% block content %}
     {% endblock %}
 

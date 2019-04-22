@@ -9,26 +9,29 @@ from apps.User.models import Student, User
 from apps.Student.models import Files
 from datetime import datetime
 
-studentname = ''
 
 class StudentView(LoginRequiredMixin, View):
 
     def get(self, request):
-        global studentname
-        studentname = request.COOKIES.get('studentname')
-        studentname = studentname.encode("iso-8859-1").decode('utf8')
+        studentid = request.COOKIES.get('username')
+        student = User.objects.get(username=studentid).student
+        studentname = student.studentname
         return render(request, 'Student/student_main.html', {'studentname': studentname})
 
     def post(self, request):
         file = request.FILES.get('upload')
         if not file:
             messages.warning(request, '请选择上传文件')
-            return redirect('/student')
+            return redirect('Student:student')
         else:
-            studentname = request.COOKIES.get('studentname')
-            studentname = studentname.encode("iso-8859-1").decode('utf8')
+            studentid = request.COOKIES.get('username')
+            student = User.objects.get(username=studentid).student
+            flag = student.Class.exam_flag
+            if not flag:
+                messages.error(request, '考试已结束,无法提交')
+                return redirect('Student:student')
+            studentname = student.studentname
             size = '%skb' % str(file.size/1000)
-            student = Student.objects.get(studentname=studentname)
             student.submittime = datetime.now()
             student_file = Files.objects.create(Filename=file.name,
                                                 Filesize=size,
@@ -37,13 +40,12 @@ class StudentView(LoginRequiredMixin, View):
                                                 )
             student_file.save()
             student.save()
-            path = '/home/alonerevelry/Online_testing_file/Student/%s' \
-                   % str(student.teacher.user_id)
+            path = '/home/alonerevelry/Online_testing_file/Student/%s/%s' \
+                   % (str(student.Class.id), student.examname)
             if not os.path.exists(path):
                 os.mkdir(path)
 
-            path = '/home/alonerevelry/Online_testing_file/Student/%s/%s' \
-                   % (str(student.teacher.user_id), studentname)
+            path = path + '/%s' % studentname
             if not os.path.exists(path):
                 os.mkdir(path)
             content = open('%s/%s' % (path, file.name), 'wb+')
@@ -51,7 +53,7 @@ class StudentView(LoginRequiredMixin, View):
                 content.write(chunk)
             content.close()
             messages.success(request, '上传成功')
-            return redirect('/student')
+            return redirect('Student:student')
 
 
 def logout_view(request):
@@ -65,9 +67,12 @@ files = []
 
 class Download(LoginRequiredMixin, View):
     def get(self, request):
-        student = User.objects.get(username='1610121106').student
-        teacherid = str(student.teacher.user_id)
-        filepath = '/home/alonerevelry/Online_testing_file/Teacher/%s/upload' % teacherid
+        studentid = request.COOKIES.get('username')
+        student = User.objects.get(username=studentid).student
+        studentname = student.studentname
+        classid = str(student.Class.id)
+        filepath = '/home/alonerevelry/Online_testing_file/Teacher/%s/upload/%s' \
+                   % (classid, student.examname)
         global files
         if files:
             files = []
@@ -115,9 +120,8 @@ def readFile(filename, chunk_size=512):
 
 class Fileinfo(LoginRequiredMixin, View):
     def get(self, request):
-        studentname = request.COOKIES.get('studentname')
-        studentname = studentname.encode("iso-8859-1").decode('utf8')
-        student = Student.objects.get(studentname=studentname)
+        studentid = request.COOKIES.get('username')
+        student = User.objects.get(username=studentid).student
         files = student.files_set.all()
         return render(request, 'Student/student_fileinfo.html', {'files': files})
 

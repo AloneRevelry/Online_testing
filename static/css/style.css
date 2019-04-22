@@ -444,5 +444,11 @@ label.check {
         padding: 25px 8px;
     }
 }
+select{
+    position: relative;
+    top: 10px;
+    background: rgba(0, 0, 0, 0.32);
+    color: rgba(255,255,255,1);
+}
 
 /*--//responsive--*/

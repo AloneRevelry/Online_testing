@@ -1,0 +1,45 @@
+{% extends 'Teacher/teacher_base.html' %}
+{% block context %}
+
+
+    <link href="/static/css/bootstrap-datetimepicker.css" rel="stylesheet">
+    <link href="/static/css/font-awesome.min.css" rel="stylesheet">
+    <link href="/static/css/style.css" rel='stylesheet' type='text/css' />
+    <link href="/static/css/form.css" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="/static/js/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/moment-with-locales.js"></script>
+    <script src="/static/js/bootstrap-datetimepicker.js"></script>
+    <h2>新建考试</h2>
+    <div  class="w3ls-login box">
+        <form method="post">
+            {% csrf_token %}
+            <div class="agile-field-txt">
+                <input type="text" name="Examtitle" required="" placeholder="请输入考试名称"/>
+            </div>
+
+            <div class='input-group' >
+                <input type='text' name="Examstarttime"  id='datetimepicker' required="" placeholder="考试开始时间"/>
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+
+            <select name="is_auto">
+                <option value="True">自动开始</option>
+                <option value="False">手动开始</option>
+            </select>
+            <div class="w3ls-bot">
+                <input type="submit" value="创建"/>
+            </div>
+
+        </form>
+    </div>
+    <script type="text/javascript">
+    $(function () {
+        $('#datetimepicker').datetimepicker({locale: 'zh-cn'});
+
+    });
+    </script>
+
+{% endblock %}

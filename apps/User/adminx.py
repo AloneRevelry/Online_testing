@@ -1,5 +1,5 @@
 import xadmin
-from apps.User.models import Student, Teacher, User
+from apps.User.models import Student, Teacher, User, Class
 from apps.Student.models import Files
 from xadmin import views
 from django import forms
@@ -62,10 +62,10 @@ class UserCreationForm(forms.ModelForm):
         user.set_password(self.cleaned_data["password1"])
         user.save()
 
-        if user.user_type == 'student':
-            Student.objects.create(studentname=user.last_name + user.first_name, user_id_id=user.id)
-        else:
-            Teacher.objects.create(teachername=user.last_name + user.first_name, user_id_id=user.id)
+        #if user.user_type == 'teacher':
+        #     Student.objects.create(studentname=user.last_name + user.first_name, user_id_id=user.id, teacher_id=12)
+        # else:
+        #    Teacher.objects.create(teachername=user.last_name + user.first_name, user_id_id=user.id)
 
         # if commit:
         #     user.save()
@@ -89,25 +89,32 @@ class GlobalSettings(object):
     # 自定义菜单
     def get_site_menu(self):
         return [
-            {
-                'title': '师生信息表',
-                'perm': self.get_model_perm(User, 'view'),
-                'menus': (
-                    {
-                        'title': '学生信息',
-                        'perm': self.get_model_perm(User, 'view'),
-                        'url': self.get_model_url(Student, 'changelist')
-                    },
-                    {
-                        'title': '教师信息',
-                        'perm': self.get_model_perm(User, 'view'),
-                        'url': self.get_model_url(Teacher, 'changelist')
+                {
+                    'title': '师生信息表',
+                    'perm': self.get_model_perm(User, 'view'),
+                    'menus': (
+                        {
+                            'title': '学生信息',
+                            'perm': self.get_model_perm(User, 'view'),
+                            'url': self.get_model_url(Student, 'changelist')
+                                   
+                        },
+                        {
+                            'title': '教师信息',
+                            'perm': self.get_model_perm(User, 'view'),
+                            'url': self.get_model_url(Teacher, 'changelist')
 
-                    },
+                        },
+                        {
+                            'title': '班级信息',
+                            'perm': self.get_model_perm(User, 'view'),
+                            'url': self.get_model_url(Class, 'changelist')
 
-                )
+                        },
 
-            }
+                        )
+
+                },
 
         ]
 
@@ -131,22 +138,21 @@ class CustomAdmin(object):
 
 class StudentAdmin(object):
     list_per_page = 10  # 指定每页显示10条数据
-    list_display = ['user_id', 'studentname', 'sip', 'submittime']
+    list_display = ['user_id', 'studentname', 'sip', 'submittime', 'examname', 'Class']
 
 class FilesAdmin(object):
     list_per_page = 10  # 指定每页显示10条数据
-    list_display = ['Filename', 'Filetime', 'Filesize', 'studentid']
-
-    def studentid(self, obj):
-        student = Student.objects.get(id=obj.student_id)
-        return student.user_id
+    list_display = ['Filename', 'Filetime', 'Filesize', 'student']
 
 
+class ClassAdmin(object):
+    list_per_page = 10
+    list_display = ['classname', 'exam_flag']
 
 
 class TeacherAdmin(object):
     list_per_page = 10  # 指定每页显示10条数据
-    list_display = ['user_id', 'teachername']
+    list_display = ['user_id', 'teachername', 'Class']
 
 
 xadmin.site.register(views.CommAdminView, GlobalSettings)
@@ -155,3 +161,4 @@ xadmin.site.register(Student, StudentAdmin)
 xadmin.site.register(Teacher, TeacherAdmin)
 xadmin.site.register(User, CustomAdmin)
 xadmin.site.register(Files, FilesAdmin)
+xadmin.site.register(Class, ClassAdmin)

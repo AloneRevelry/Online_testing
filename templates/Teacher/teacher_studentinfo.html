@@ -1,0 +1,55 @@
+{% extends 'Teacher/teacher_base.html' %}
+
+{% block context %}
+    <link href="/static/css/teacher_studentinfo.css" rel="stylesheet" type="text/css">
+    <script src="/static/js/Teacher/jquery.min.js"></script>
+    <script src="/static/js/tableXR.js"></script>
+    <div id="root">
+    </div>
+
+    <div  class="w3ls-login box" id="box" style="display: none;position: absolute;top: 25%;left:25%;" >
+        <a class='close' href='' onclick="msgbox(0); return false;" style="width: 100%;" >关闭</a>
+        <form method="post">
+            {% csrf_token %}
+            <div class="agile-field-txt">
+                <input type="text" name="studentid" placeholder="学号" required=""/>
+            </div>
+            <div class="agile-field-txt">
+                <input type="text" name="studentname" placeholder="姓名" required="" />
+            </div>
+            <div class="agile-field-txt">
+                <input type="text" name="class" placeholder="班级" required="" />
+            </div>
+            <div class="w3ls-bot">
+                <input type="submit" value="添加">
+            </div>
+        </form>
+
+    </div>
+
+
+
+    <script type="text/javascript">
+        $('#root').tableXR({
+            //表格标题
+            title:'学生信息管理',
+            //表格头部设置
+            columns:[
+                {data:'studentid',title:'学号'},
+                {data:'name',title:'姓名'},
+                {data:'class',title:'班级'},
+                {data:'ip',title:'ip地址'},
+                {data:'submittime',title:'最后提交时间'},
+            ],
+            //表格数据：
+            data:[
+                {% for student in students %}
+                    {studentid:'{{ student.user_id }}',name:'{{ student.studentname }}',
+                        class:'{{ student.Class }}',ip:'{{ student.sip }}',
+                        submittime:'{{student.submittime}}'},
+                {% endfor %}
+
+            ]
+        })
+    </script>
+{% endblock %}

@@ -2,17 +2,17 @@
 
 {% block context %}
     <link href="/static/css/form.css" rel="stylesheet" type="text/css"/>
-    <h2>解锁学生ip</h2>
+    <h2>考试清理</h2>
     <div  class="w3ls-login box">
         <form method="post">
             {% csrf_token %}
-            <div class="agile-field-txt">
-                <input type="text" name="studentid" placeholder="请输入学生学号"/>
+            <div class="agile-field-txt" style="color: red">
+                <label>是否确定清理考试信息?</label>
             </div>
+
             <div class="w3ls-bot">
-                <input type="submit" value="解锁ip"/>
+                <input type="submit" value="确定"/>
             </div>
         </form>
     </div>
-
 {% endblock %}

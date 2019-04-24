@@ -4,13 +4,14 @@ from django.contrib.auth import logout
 from apps.User.models import User, Student, Class
 from apps.Teacher.models import Examinfo
 import os
+import shutil
 import re
 from django.contrib import messages
 from django.http import StreamingHttpResponse
 import zipfile
 from utils.mixin import LoginRequiredMixin
 from datetime import datetime
-import xlrd
+import xlrd, xlwt
 
 
 # Create your views here.
@@ -87,10 +88,16 @@ class FileDownload(LoginRequiredMixin, View):
     def get(self, request):
         username = request.COOKIES.get('username')
         teacher = User.objects.get(username=username).teacher
-        exam = teacher.examinfo_set.get(Examstatus=1)
+        exam_flag = teacher.Class.exam_flag
+        if exam_flag:
+            messages.warning(request, '考试尚未结束')
+            return redirect('Teacher:teacher')
         classid = str(teacher.Class.id)
-        filepath = '/home/alonerevelry/Online_testing_file/Student/%s/%s' % (classid, exam.Examtitle)
-        path = '/home/alonerevelry/Online_testing_file/Teacher/%s/download' % classid
+        filepath = '/home/alonerevelry/Online_testing_file/Student/%s/%s' % (classid, Class.exam_title)
+        path = '/home/alonerevelry/Online_testing_file/Teacher/%s' % classid
+        if not os.path.exists(path):
+            os.mkdir(path)
+        path = path + '/download'
         if not os.path.exists(path):
             os.mkdir(path)
         path = path + '/%s' % username
@@ -185,6 +192,7 @@ class StartExamView(LoginRequiredMixin, View):
         exam.save()
         Class = exam.teacher.Class
         Class.exam_flag = True
+        Class.exam_title = exam.Examtitle
         Class.save()
         students = Student.objects.filter(Class=Class)
         for student in students:
@@ -195,6 +203,7 @@ class StartExamView(LoginRequiredMixin, View):
 
 
 class EndExamView(LoginRequiredMixin, View):
+
     def get(self, request):
         username = request.COOKIES.get('username')
         exams = User.objects.get(username=username).teacher.examinfo_set.all()
@@ -262,5 +271,184 @@ class ImportStudentsView(LoginRequiredMixin, View):
             else:
                 messages.error(request, '不是excel文件,请重新选择文件')
                 return redirect('Teacher:importstudents')
+
+
+class StudentInfoView(LoginRequiredMixin, View):
+
+    def get(self, request):
+        username = request.COOKIES.get('username')
+        teacher = User.objects.get(username=username).teacher
+        students = Student.objects.filter(Class=teacher.Class)
+        return render(request, 'Teacher/teacher_studentinfo.html', {'students': students})
+
+    def post(self, request):
+        studentid = request.POST.get('studentid')
+        studentname = request.POST.get('studentname')
+        classname = request.POST.get('class')
+
+        try:
+            user = User.objects.create_user(username=studentid, password=studentname)
+            user.save()
+            C = Class.objects.get(classname=classname)
+            student = Student.objects.create(studentname=studentname,
+                                             user_id=user,
+                                             Class=C)
+            student.save()
+            messages.success(request, ' 学生添加成功')
+        except:
+            messages.error(request, '输入信息有误')
+
+        return redirect('Teacher:studentinfo')
+
+
+class ShowExamStatus(LoginRequiredMixin, View):
+
+    def get(self, request):
+        username = request.COOKIES.get('username')
+        teacher = User.objects.get(username=username).teacher
+        students = Student.objects.filter(Class=teacher.Class)
+        login_students = []
+        unlogin_students = []
+        submit_students = []
+        unsubmit_students = []
+        login_num = 0
+        submit_num = 0
+        student_num = len(students)
+        lists = []
+        for student in students:
+            if student.sip:
+                login_num += 1
+                login_students.append(student)
+            else:
+                unlogin_students.append(student)
+
+            if student.submittime:
+                submit_num += 1
+                submit_students.append(student)
+            else:
+                unsubmit_students.append(student)
+
+
+        unlogin_num = student_num - login_num
+        unsubmit_num = student_num - submit_num
+        max_num = max(login_num, unlogin_num, submit_num, unsubmit_num)
+
+        for i in range(max_num):
+            a = ' '
+            b = ' '
+            c = ' '
+            d = ' '
+            if i+1<=len(login_students):
+                a = login_students[i].studentname
+            if i+1<=len(unlogin_students):
+                b = unlogin_students[i].studentname
+            if i+1<=len(submit_students):
+                c = submit_students[i].studentname
+            if i+1<=len(unsubmit_students):
+                d = unsubmit_students[i].studentname
+
+            lists.append([a, b, c, d])
+
+        return render(request, 'Teacher/teacher_showexamstatus.html', {
+            'login_num': login_num,
+            'unlogin_num': unlogin_num,
+            'submit_num': submit_num,
+            'unsubmit_num': unsubmit_num,
+            'lists': lists,
+        })
+
+
+class ExportStudentView(LoginRequiredMixin, View):
+    def get(self, request):
+        username = request.COOKIES.get('username')
+        teacher = User.objects.get(username=username).teacher
+        students = Student.objects.filter(Class=teacher.Class)
+        path = '/home/alonerevelry/Online_testing_file/temp/studentinfo.xls'
+
+        workbook = xlwt.Workbook(encoding='ascii')
+        worksheet = workbook.add_sheet('sheet1')
+        worksheet.write(0, 0, label='学号')
+        worksheet.write(0, 1, label='姓名')
+        worksheet.write(0, 2, label='最后提交时间')
+        worksheet.write(0, 3, label='班级')
+        n = 1
+        for student in students:
+            worksheet.write(n, 0, label=str(student.user_id))
+            worksheet.write(n, 1, label=str(student.studentname))
+            worksheet.write(n, 2, label=str(student.submittime))
+            worksheet.write(n, 3, label=str(student.Class))
+            n += 1
+        workbook.save(path)
+        response = StreamingHttpResponse(self.readFile(path))
+        response['Content-Type'] = 'application/octet-stream'
+        response['Content-Disposition'] = 'attachment;filename="{0}"'.format('sutdentinfo.xls')
+        return response
+
+    def readFile(self, filename, chunk_size=512):
+        with open(filename, 'rb') as f:
+            while True:
+                c = f.read(chunk_size)
+                if c:
+                    yield c
+                else:
+                    break
+
+
+class SendMsgView(LoginRequiredMixin, View):
+
+    def get(self, request):
+        return render(request, 'Teacher/teacher_sendmsg.html')
+
+    def post(self, request):
+        username = request.COOKIES.get('username')
+        teacher = User.objects.get(username=username).teacher
+        Class = teacher.Class
+        msg = request.POST.get('msg')
+        Class.msg = msg
+        Class.save()
+        messages.success(request, '消息发送成功')
+        return redirect('Teacher:sendmsg')
+
+
+class CleanView(LoginRequiredMixin, View):
+
+    def get(self, request):
+        username = request.COOKIES.get('username')
+        user = User.objects.get(username=username)
+        if user.is_staff:
+            return render(request, 'Teacher/teacher_clean.html')
+        else:
+            messages.error(request, '您没有清理考试权限')
+            return redirect('Teacher:teacher')
+
+    def post(self, request):
+        username = request.COOKIES.get('username')
+        teacher = User.objects.get(username=username).teacher
+        Class = teacher.Class
+        classid = str(Class.id)
+        if Class.exam_flag:
+            messages.error(request, '考试尚未结束,无法清理考试内容')
+            return redirect('Teacher:teacher')
+        path = '/home/alonerevelry/Online_testing_file/Teacher/%s/download/%s' % (classid, teacher.user_id)
+        if not os.path.exists(path):
+            messages.error(request, '学生答卷尚未打包,请先打包')
+            return redirect('Teacher:teacher')
+
+        shutil.rmtree(path)
+        path = '/home/alonerevelry/Online_testing_file/Student/%s' % classid
+        shutil.rmtree(path)
+        path = '/home/alonerevelry/Online_testing_file/Teacher/%s/upload' % classid
+        shutil.rmtree(path)
+        path = '/home/alonerevelry/Online_testing_file/temp/studentinfo.xls'
+        if os.path.exists(path):
+            os.remove(path)
+        exams = teacher.examinfo_set.all()
+        for exam in exams:
+            exam.delete()
+        for student in Class.student_set.all():
+            student.user_id.delete()
+
+        messages.success(request, '考试清理完成')
+        return redirect('Teacher:teacher')
 
 

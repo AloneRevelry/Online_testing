@@ -1,18 +1,16 @@
 {% extends 'Teacher/teacher_base.html' %}
-
 {% block context %}
     <link href="/static/css/form.css" rel="stylesheet" type="text/css"/>
-    <h2>解锁学生ip</h2>
+    <h2>发送通知消息</h2>
     <div  class="w3ls-login box">
         <form method="post">
             {% csrf_token %}
             <div class="agile-field-txt">
-                <input type="text" name="studentid" placeholder="请输入学生学号"/>
+                <textarea name="msg" cols="30" rows="5" placeholder="请输入通知内容"></textarea>
             </div>
             <div class="w3ls-bot">
-                <input type="submit" value="解锁ip"/>
+                <input type="submit" value="发送"/>
             </div>
         </form>
     </div>
-
 {% endblock %}

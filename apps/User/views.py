@@ -58,7 +58,7 @@ class LoginView(View):
                         return render(request, 'User/login.html', {'errmsg': '考试未开始,请稍等'})
                     ip = request.META['REMOTE_ADDR']
                     if user.student.sip == None:
-                        astudent = Student.objects.get(studentname=user.student.studentname)
+                        astudent = user.student
                         astudent.sip = ip
                         astudent.save()
                     else:

@@ -22,6 +22,8 @@ class User(AbstractUser):
 class Class(models.Model):
     classname = models.CharField(max_length=20, verbose_name='班级名称')
     exam_flag = models.BooleanField(default=False, verbose_name='是否开启考试')
+    exam_title = models.CharField(max_length=20, blank=True, null=True, verbose_name='在考科目' )
+    msg = models.CharField(max_length=200, blank=True, null=True, verbose_name='消息通知')
 
 
     class Meta:
@@ -56,7 +58,6 @@ class Student(models.Model):
     user_id = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name='学号')
     Class = models.ForeignKey(Class, on_delete=models.CASCADE, verbose_name='所属班级')
     examname = models.CharField(max_length=20, blank=True, null=True, verbose_name='考试科目')
-
 
     class Meta:
         db_table = 'student_info'

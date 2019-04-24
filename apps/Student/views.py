@@ -16,7 +16,8 @@ class StudentView(LoginRequiredMixin, View):
         studentid = request.COOKIES.get('username')
         student = User.objects.get(username=studentid).student
         studentname = student.studentname
-        return render(request, 'Student/student_main.html', {'studentname': studentname})
+        return render(request, 'Student/student_main.html', {'studentname': studentname,
+                                                             'msg': student.Class.msg})
 
     def post(self, request):
         file = request.FILES.get('upload')
@@ -40,8 +41,10 @@ class StudentView(LoginRequiredMixin, View):
                                                 )
             student_file.save()
             student.save()
-            path = '/home/alonerevelry/Online_testing_file/Student/%s/%s' \
-                   % (str(student.Class.id), student.examname)
+            path = '/home/alonerevelry/Online_testing_file/Student/%s' % str(student.Class.id)
+            if not os.path.exists(path):
+                os.mkdir(path)
+            path = path + '/%s' % student.examname
             if not os.path.exists(path):
                 os.mkdir(path)
 
@@ -96,6 +99,7 @@ class Download(LoginRequiredMixin, View):
         return render(request, 'Student/student_download.html', {
             'files': files,
             'studentname': studentname,
+            'msg': student.Class.msg
         })
 
 def download_file(request):
@@ -123,7 +127,8 @@ class Fileinfo(LoginRequiredMixin, View):
         studentid = request.COOKIES.get('username')
         student = User.objects.get(username=studentid).student
         files = student.files_set.all()
-        return render(request, 'Student/student_fileinfo.html', {'files': files})
+        return render(request, 'Student/student_fileinfo.html', {'files': files,
+                                                                 'msg': student.Class.msg})
 
 
 class Filedata(LoginRequiredMixin, View):

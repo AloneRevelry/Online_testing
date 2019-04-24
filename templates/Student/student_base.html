@@ -12,9 +12,22 @@
 	<link rel="stylesheet" href="/static/css/head.css" />
     <link href="/static/css/body.css" rel='stylesheet' type='text/css' />
     <link href="/static/css/skin.css" rel="stylesheet" type="text/css"/>
+    <style type="text/css">
+        *{padding:0px;margin:0px;font-family:"微软雅黑";}
 
+        img{border:0px;}
 
-     <script>
+        .fl{ float:left}
+        .fr{ float:right}
+
+        /*右下角弹出*/
+        .tipfloat{display:none;z-index:999;border:1px #009393 solid; position:absolute; bottom:0px; right:17px;width:388px;height:268px; background: rgba(0, 0, 0, 0.32);}
+        .tipfloat_bt{ height:49px; line-height:49px;background:#009393; padding:0px 20px; font-size:18px; color:#fff; }
+        .xx_nrong{font-size:18px; color:#fff; text-align:center; padding:30px 0; line-height:26px; }
+
+    </style>
+
+    <script>
         function mytime(){
         var a = new Date();
         var b = a.toLocaleTimeString();
@@ -76,6 +89,22 @@
         </div>
 
 	</header>
+
+    <div>
+     <!--弹出信息 右下角-->
+        <div class="tipfloat">
+            <p class="tipfloat_bt">
+                <span class="fl">消息</span>
+                <span class="fr close"><img src="/static/images/close.png"></span>
+            </p>
+            <div class="ranklist">
+                 <div class="xx_nrong">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="/static/js/jquery.min.js"></script>
     <script src="/static/js/Teacher/jquery.fullPage.min.js"></script>
 	<script src="/static/js/Teacher/index_slick.js"></script>
@@ -83,6 +112,29 @@
     <script src="/static/js/font.js"></script>
     <script src="/static/js/jquery-1.7.2.min.js" type="text/javascript"></script>
     <script src="/static/js/Cxc-Dialog.js" type="text/javascript"></script>
+    <script>
+
+        $(function(){
+
+            var num = 0
+            inform()
+
+            $(".close").click(function(){
+                $(".tipfloat").animate({height:"hide"},800);
+
+            });
+        })
+
+        function inform(){
+            if('{{ msg }}' != '' && '{{ msg }}' !='None'){
+                $(".tipfloat").animate({height:"show"},800);
+
+                //文本输出可删除
+            $(".xx_nrong").html('{{ msg }}');
+             }
+        }
+
+    </script>
     <script>
         {% if messages %}
             {% for msg in messages %}

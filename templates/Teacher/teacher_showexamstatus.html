@@ -1,0 +1,77 @@
+{% extends 'Teacher/teacher_base.html'%}
+{% block context %}
+    <script src="/static/js/Teacher/jquery.min.js"></script>
+    <script src="/static/js/tableXR1.js"></script>
+    <style>
+        button{
+            color: #ffffff;
+            font-weight: 100;
+            width: 100%;
+            padding: 0.4em 0;
+            font-size: 1em;
+            letter-spacing: 2px;
+            cursor: pointer;
+            border: none;
+            outline: none;
+            background: #000;
+            font-family: 'Catamaran', sans-serif;
+            transition: 0.5s all ease;
+            -webkit-transition: 0.5s all ease;
+            -moz-transition: 0.5s all ease;
+            -o-transition: 0.5s all ease;
+            -ms-transition: 0.5s all ease;
+        }
+        button:hover{
+            color: #fff;
+            box-shadow: 0 20px 5px -10px rgba(0, 0, 0, 0.4);
+            transform: translateY(5px);
+        }
+    </style>
+    <div class="table-wrapper" id="info">
+        <table class="fl-table">
+            <caption>考试情况</caption>
+            <thead>
+                <tr>
+                    <th>已登录/未登录</th>
+                    <th>已提交/未提交</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                    <tr>
+                        <td>{{ login_num }}/{{ unlogin_num }}</td>
+                        <td>{{ submit_num }}/{{ unsubmit_num }}</td>
+                    </tr>
+            <tbody>
+        </table>
+        <div><button onclick="msgbox(1)">查看详情</button></div>
+    </div>
+    <div id="detil_info" style="display: none">
+    </div>
+
+    <script type="text/javascript">
+        $('#detil_info').tableXR({
+            //表格标题
+            title:'考试情况',
+            //表格头部设置
+            columns:[
+                {data:'login',title:'已登录名单'},
+                {data:'unlogin',title:'未登录名单'},
+                {data:'submit',title:'已提交名单'},
+                {data:'unsubmit',title:'未提交名单'},
+            ],
+            //表格数据：
+            data:[
+                {% for list in lists %}
+                    {
+                        login:'{{ list.0 }}',
+                        unlogin:'{{ list.1 }}',
+                        submit:'{{ list.2 }}',
+                        unsubmit:'{{ list.3 }}'
+                    },
+                {% endfor %}
+
+            ]
+        })
+    </script>
+{% endblock %}

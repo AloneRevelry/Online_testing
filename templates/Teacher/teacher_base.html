@@ -11,7 +11,8 @@
 	<!--导航样式-->
 	<link rel="stylesheet" href="/static/css/head.css" />
     <link href="/static/css/body.css" rel='stylesheet' type='text/css' />
-
+    <link href="/static/css/style.css" rel='stylesheet' type='text/css' />
+    <link rel="stylesheet" href="/static/css/student_download.css">
      <script>
         function mytime(){
         var a = new Date();
@@ -60,21 +61,20 @@
                         </div>
 					</li>
                     <li class="info">
-						<a href="javascript:void(0)">考试情况</a>
+						<a href="/teacher/showexamstatus">考试情况</a>
                     </li>
 					<li class="dropdown manage">
 						<a href="javascript:void(0)">学生管理</a>
 						<div class="dropdown_menu">
-							<a href="">学生信息管理</a>
+							<a href="/teacher/studentinfo">学生信息管理</a>
 							<a href="/teacher/unlockip">解除学生登录锁定</a>
-                            <a href="#">导出提交信息</a>
                         </div>
 					</li>
                     <li class="clean">
-						<a href="javascript:void(0)">考试清理和删除</a>
+						<a href="/teacher/clean">考试清理和删除</a>
                     </li>
                     <li style="border: none;" class="note">
-						<a href="javascript:void(0)">通知管理</a>
+						<a href="/teacher/sendmsg">通知管理</a>
                     </li>
                     <li style="border: none;" class="logout">
 						<a href="/teacher/logout">注销</a>
@@ -110,21 +110,20 @@
                 </div>
             </li>
             <li>
-                <a href="javascript:void(0)">考试情况</a>
+                <a href="/teacher/showexamstatus">考试情况</a>
             </li>
             <li class="dropdown">
                 <a href="javascript:void(0)">学生管理</a>
                 <div class="dropdown_menu">
-                    <a href="#">学生信息管理</a>
+                    <a href="/teacher/studentinfo">学生信息管理</a>
                     <a href="/teacher/unlockip">解除学生登录锁定</a>
-                    <a href="#">导出提交信息</a>
                 </div>
             </li>
             <li>
-                <a href="javascript:void(0)">考试清理和删除</a>
+                <a href="/teacher/clean">考试清理和删除</a>
             </li>
             <li>
-                <a href="javascript:void(0)">通知管理</a>
+                <a href="/teacher/sendmsg">通知管理</a>
             </li>
             <li>
                 <a href="/teacher/logout">注销</a>

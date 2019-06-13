@@ -13,6 +13,7 @@ from utils.mixin import LoginRequiredMixin
 from datetime import datetime
 import xlrd, xlwt
 
+exam_list = []
 
 # Create your views here.
 class TeacherView(LoginRequiredMixin, View):
@@ -156,10 +157,11 @@ class NewExamView(LoginRequiredMixin, View):
             hour = str(hour)
         Examstarttime = '%s %s:%s:%s' % (ymd, hour, minute, '00')
         teacher = User.objects.get(username=username).teacher
-        Examinfo.objects.create(Examtitle=Examtitle, Examstarttime=Examstarttime,
+
+        exam = Examinfo.objects.create(Examtitle=Examtitle, Examstarttime=Examstarttime,
                                        is_auto=is_auto,
                                        teacher=teacher)
-
+        exam_list.append(exam)
 
         messages.success(request, '考试创建成功')
         return redirect('Teacher:newexam')

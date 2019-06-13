@@ -39,12 +39,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_crontab',
     'apps.User',
     'apps.Student',
     'apps.Teacher',
     'xadmin',
     'crispy_forms',
 ]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -155,3 +157,7 @@ AUTH_USER_MODEL = 'User.User'
 # 配置登录url地址
 LOGIN_URL = '/login'
 
+# 添加(自动开启考试)定时任务
+CRONJOBS = [
+    ('*/1 * * * *', 'apps.Teacher.AutoStartExam.task')
+]

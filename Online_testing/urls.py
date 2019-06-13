@@ -16,6 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 import xadmin
+from apscheduler.schedulers import
+from apps.Teacher.AutoStartExam import task
 
 urlpatterns = [
     #path('admin/', admin.site.urls),
